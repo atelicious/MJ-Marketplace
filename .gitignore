@@ -1,0 +1,8 @@
+#ignore all pyc files
+*.pyc
+
+#ignore creds.txt
+*.txt
+
+#ignore env files
+*.env

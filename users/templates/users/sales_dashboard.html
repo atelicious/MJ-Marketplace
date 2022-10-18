@@ -1,0 +1,122 @@
+{% extends "marketplace/base.html" %}
+{% load widget_tweaks %}
+
+
+
+{% block content %}
+<div>
+    <div class="position-static border border-secondary profile-shadow" style="margin:20px; padding:20px">
+      <legend class="border-bottom mb-4" style="text-align:center">Sales Dashboard</legend>
+        <form >
+          <div class="row align-items-end" >
+            <div class="form-group col">
+              {{ filter.form.customer.label_tag }}
+              {% render_field filter.form.customer class="form-control" %}
+            </div>
+            <div class="form-group col">
+              {{ filter.form.transaction_id.label_tag }}
+              {% render_field filter.form.transaction_id class="form-control" %}
+            </div>
+            <div class="form-group col">
+              {{ filter.form.delivery_status.label_tag }}
+              {{ filter.form.delivery_status.option_tag }}
+              {% render_field filter.form.delivery_status class="form-control" %}
+            </div>
+            <div class="form-group col">
+              {{ filter.form.payment_status.label_tag }}
+              {{ filter.form.payment_status.option_tag }}
+              {% render_field filter.form.payment_status class="form-control" %}
+            </div>
+            <div class="form-group col">
+              {{ filter.form.start_date_filter.label_tag }}
+              {% render_field filter.form.start_date_filter class="form-control" %}
+            </div>
+            <div class="form-group col">
+              {{ filter.form.end_date_filter.label_tag }}
+              {% render_field filter.form.end_date_filter class="form-control" %}
+            </div>
+            
+        </div>
+          <button class="btn btn-a" type="submit">Search</button>
+        </form>
+    </div>
+    <div class="row" style="margin:20px">
+      <div class="col border border-secondary profile-shadow" style="margin-right:5px; padding:20px">
+        <div class="col-xl-12" style="margin:5px">
+          <legend class="border-bottom mb-4" style="text-align:center">DELIVERIES</legend>
+          <div class="row" >
+            <div class="col border border-secondary profile-shadow btn-a" style="margin:5px">
+              <div class="float-left" style="display:inline-block;">Total Deliveries</div>
+              <div class="float-right" style="display:inline-block;"><strong>{{ metrics.total_orders }}</strong></div>
+            </div>
+            <div class="col border border-secondary profile-shadow btn-a" style="margin:5px">
+              <div class="float-left" style="display:inline-block;">Pending Deliveries</div>
+              <div class="float-right" style="display:inline-block;"><strong>{{ metrics.total_pending_delivery_orders }}</strong></div>
+            </div>
+            <div class="w-100"></div>
+            <div class="col border border-secondary profile-shadow btn-a" style="margin:5px">
+              <div class="float-left" style="display:inline-block;">Orders For Delivery</div>
+              <div class="float-right" style="display:inline-block;"><strong>{{ metrics.total_for_delivery_orders }}</strong></div>
+            </div>
+            <div class="col border border-secondary profile-shadow btn-a" style="margin:5px">
+              <div class="float-left" style="display:inline-block;">Total Fulfilled Orders</div>
+              <div class="float-right" style="display:inline-block;"><strong>{{ metrics.total_delivered_orders }}</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-12 " style="margin:5px">
+          <legend class="border-bottom mb-4" style="text-align:center">SALES</legend>
+          <div class="row" >
+            <div class="col border border-secondary profile-shadow btn-a" style="margin:5px">
+              <div class="float-left" style="display:inline-block;">Total Gross Sales</div>
+              <div class="float-right" style="display:inline-block;"><strong>&#8369 {{ metrics.total_gross_sales }}</strong></div>
+            </div>
+            <div class="col border border-secondary profile-shadow btn-a" style="margin:5px">
+              <div class="float-left" style="display:inline-block;">Total Pending Sales</div>
+              <div class="float-right" style="display:inline-block;"><strong>&#8369 {{ metrics.total_pending_sales }}</strong></div>
+            </div>
+            <div class="w-100"></div>
+            <div class="col border border-secondary profile-shadow btn-a" style="margin:5px">
+              <div class="float-left " style="display:inline-block;">Total Cancelled Sales</div>
+              <div class="float-right" style="display:inline-block;"><strong>&#8369 {{ metrics.total_cancelled_sales }}</strong></div>
+            </div>
+            <div class="col border border-secondary profile-shadow btn-a" style="margin:5px">
+              <div class="float-left" style="display:inline-block;">Total Actual Sales</div>
+              <div class="float-right" style="display:inline-block;"><strong>&#8369 {{ metrics.total_paid_sales }}</strong></div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div class="col border border-secondary profile-shadow" style="margin-left:5px; padding:20px">
+        <div class="row">
+          <legend class="border-bottom mb-4" style="text-align:center">SALES INSIGHTS</legend>
+          <div class="col border border-secondary profile-shadow btn-a" style="margin:5px">
+            <legend class="border-bottom mb-4" style="text-align:center">PER ITEM</legend>
+            {%  for items in metrics.items_data.items %}
+            <div class="d-flex justify-content-between ">
+              <div>{{ items.0 }}</div>
+              <div><strong>{{ items.1 }}</strong></div>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="col border border-secondary profile-shadow btn-a" style="margin:5px">
+            <legend class="border-bottom mb-4" style="text-align:center">PER CUSTOMER</legend>
+            {%  for items in metrics.sales_per_customer.items %}
+              <div class="d-flex justify-content-between">
+                <div>{{ items.0 }}</div>
+                <div><strong>&#8369 {{ items.1 }}</strong></div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+        
+    </div>
+
+</div>
+
+
+
+{% endblock content %}

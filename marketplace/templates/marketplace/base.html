@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" type=" text/css" href="{% static 'marketplace/main.css' %}"> 
+
+    <script type="text/javascript">
+        var user = "{{ request.user }}"
+
+        function get_token_value(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var csrftoken = get_token_value('csrftoken');
+
+    </script>
+
+    {% if title %}
+        <title>{{ title }}</title>
+    {% else %}
+        <title> Sample </title>
+    {% endif %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top justify-content-between" style="background-color: #F3D8C7;">
+        <a class="navbar-brand" href="{% url 'marketplace-home' %}">M&J Marketplace</a>
+        <div class="collapse navbar-collapse border-left border-secondary" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link head" href="{% url 'marketplace-home' %}">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link head" href="{% url 'marketplace-cart' %}">Cart</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link head" href="{% url 'marketplace-checkout' %}">Checkout</a>
+              </li>
+              {% if user.is_superuser %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Dashboard
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="{% url 'accounting_dashboard' %}">Accounting</a>
+                  <a class="dropdown-item" href="{% url 'logistics_dashboard' %}">Logistics</a>
+                  <a class="dropdown-item" href="{% url 'sales_dashboard' %}">Sales</a>
+                </div>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link head" href="{% url 'faqs' %}">FAQs</a>
+                </li>
+                {% endif %}
+            </ul>
+          </div>       
+        <div class="form-inline my-2 my-lg-0">
+            <a href="{% url 'marketplace-cart'%}" >
+                <img  id="cart-icon" src="{% static 'images/cart-image.png' %}">
+            </a>
+            <p id="cart-total">{{ cart_items|default:'0' }}</p>
+            {% if user.is_authenticated %}
+            <a class="btn btn-outline-secondary btn-a my-2 my-sm-0" href="{% url 'profile' %}"  type="button">Profile</a>
+            <a class="btn btn-outline-secondary btn-a my-2 my-sm-0" href="{% url 'logout' %}"  type="button">Logout</a>
+            {% else %}
+            <a class="btn btn-outline-secondary btn-a my-2 my-sm-0" href="{% url 'login' %}"  type="button">Login</a>
+            <a class="btn btn-outline-secondary btn-a my-2 my-sm-0" href="{% url 'user_register' %}"  type="button">Register</a>
+            {% endif %}
+        </div>
+    </nav>
+    <div>
+        {% if messages %}
+        {% for message in messages%}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}    
+        {% endif %}
+    </div>
+    {% block content %} {% endblock %}
+
+
+    <footer class="page-footer" style="background-color: #f3d8c7;margin:auto">
+        <div class="footer-copyright text-center py-3">
+            <p style="color:black">© Copyright 2022 <a href="/" style="color:black"> MJMarketplace.com</a></p>
+            <p>Made by <a href="https://github.com/atelicious" target="_blank" style="color:black">Atelicious</a></p>
+        </div>
+    </footer>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="{% static 'marketplace/cart.js' %}"></script>
+</body>
+</html>

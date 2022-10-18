@@ -1,0 +1,187 @@
+{% extends "marketplace/base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<div style="margin:20px">
+    <legend class="border-bottom mb-4" style="text-align:center">Frequently Asked Qustions</legend>
+    <div id="accordion" >
+        <div class="card profile-shadow" style="margin-top:20px">
+          <div class="card-header" id="heading1">
+            <h5 class="mb-0">
+              <button class="btn btn-a" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
+                How can I create a new account?
+              </button>
+            </h5>
+          </div>
+      
+          <div id="collapse1" class="collapse" aria-labelledby="heading1" data-parent="#accordion">
+            <div class="card-body">
+              <p>
+                You can easily create an account by clicking on the register button located on the top right of our
+                navigation bar. You will be redirected to a registration page where you will be prompted to enter a 
+                username, password, and details about yourself like your name, address, contact info, etc. Once you have entered these details,
+                you can now use your credentials to log in into our marketplace and proceed to your shopping.
+              </p>
+              <p><strong>
+                Please do note however, that details such as your phone number and email address are needed to be as 
+                accurate as possible, as we utilize these details to serve you as efficiently as possible. Inaccurate
+                details may hinder us from processing and delivering your orders on time.
+              </strong>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="card profile-shadow" style="margin-top:20px">
+          <div class="card-header" id="heading2">
+            <h5 class="mb-0">
+              <button class="btn btn-a collapsed" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                How can I order an item?
+              </button>
+            </h5>
+          </div>
+          <div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#accordion">
+            <div class="card-body">
+             <p>
+              You can place an order by pressing the "Checkout" tab in the navigation bar or by clicking the basket icon 
+              on the top right corner of the page and pressing the "Proceed to Checkout" button. You will be given a 
+              summary of your order and a shipping form that you will have to fill up with the address where your order 
+              should be sent. 
+             </p>
+             <p>
+              Once the shipping form is filled up, you can now press the "Place Order" button and a notification
+              will be shown that confirms that you have succesfully placed your order. We will be contacting you
+              12-24 hours after your order has been posted either via your email or phone number to confirm your order.
+             </p>
+             <p><strong>
+              As always, please make sure that address in your shipping form is as accurate as possible. This helps us save
+              time in delivering your order, thus making your order arrive on time.
+            </strong>
+            </p>
+            </div>
+          </div>
+        </div>
+        <div class="card profile-shadow" style="margin-top:20px">
+          <div class="card-header" id="heading3">
+            <h5 class="mb-0">
+              <button class="btn btn-a collapsed" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                How can I pay for my ordered item?
+              </button>
+            </h5>
+          </div>
+          <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordion">
+            <div class="card-body">
+              <p>
+                You will be paying for your order once our logistics team has delivered the order to your door. The logistics team
+                will be the one responsible for collecting your payment and giving you your physical reciept.
+                <p>
+                  <strong>
+                    Payments collected by or logistics team will be reflected to your account 6-12 hours after your payment.
+                  </strong>
+                </p>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="card profile-shadow" style="margin-top:20px">
+            <div class="card-header" id="heading4">
+              <h5 class="mb-0">
+                <button class="btn btn-a collapsed" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                How can I cancel my order?
+                </button>
+              </h5>
+            </div>
+            <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordion">
+              <div class="card-body">
+                <p>
+                  In order to prevent fraud and abuse of our services, orders placed in the marketplace cannot be cancelled by the user. 
+                  We handle cancelling and refunding of orders in a case by case basis, so if you want to cancel your order, you can contact
+                  us either via:
+                <ul><strong>Email:</strong></ul>
+                <ul><strong>Phone:</strong></ul>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="card profile-shadow" style="margin-top:20px">
+            <div class="card-header" id="heading5">
+              <h5 class="mb-0">
+                <button class="btn btn-a collapsed" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                How can I ask for a refund for my order?
+                </button>
+              </h5>
+            </div>
+            <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordion">
+              <div class="card-body">
+                <p>
+                  As with our policy with cancelling of orders, we handle refunds for our orders in a case by case basis. 
+                  To request a refund for your order, you can contact us either via:
+                <ul><strong>Email:</strong></ul>
+                <ul><strong>Phone:</strong></ul>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="card profile-shadow" style="margin-top:20px">
+            <div class="card-header" id="heading6">
+              <h5 class="mb-0">
+                <button class="btn btn btn-a collapsed" data-toggle="collapse" data-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
+                How long does it take for an order to be delivered?
+                </button>
+              </h5>
+            </div>
+            <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordion">
+              <div class="card-body">
+                Processing orders usually takes up to 6-12 hours form the date the order is posted. After confirming the order to the 
+                user, the order will be delivered in the next one to two business days.
+              </div>
+            </div>
+          </div>
+          <div class="card profile-shadow" style="margin-top:20px">
+            <div class="card-header" id="heading7">
+              <h5 class="mb-0">
+                <button class="btn btn btn-a collapsed" data-toggle="collapse" data-target="#collapse7" aria-expanded="false" aria-controls="collapse7">
+                How can I contact you in case I have more questions?
+                </button>
+              </h5>
+            </div>
+            <div id="collapse7" class="collapse" aria-labelledby="heading7" data-parent="#accordion">
+              <div class="card-body">
+                For any inquiries abour our products and services, you can contact us either via:
+                <ul><strong>Email:</strong></ul>
+                <ul><strong>Phone:</strong></ul>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+</div>
+
+
+{% endblock content %}

@@ -1,0 +1,147 @@
+{% extends "marketplace/base.html" %}
+{% load static %}
+
+{% block content%}
+<section>
+    <div class="row" style="display: flex; flex-wrap: wrap;">
+
+        <div class="col-lg-6">
+            <div class="border border-secondary custom-shadow" >
+                <a  style="margin-left: 10px; margin-top: 10px;" class="btn btn-a btn-outline-secondary" href="{% url 'marketplace-cart' %}">&#8678 Go back to cart</a>
+                <div style="margin: 10px; padding: 10px;">
+                    <h3>Order Details</h3>
+                </div>
+                <table class="table table-striped text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Item Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for items in products %}
+                        <tr>
+                            <th scope="row"><img class="img-thumbnail" style="width: 40px; height: 40px" src="{{ items.product.image_url }}"></th>
+                            <td>{{ items.product.name }}</td>
+                            <td>x{{ items.product_qty }}</td>
+                        </tr>
+                      {% endfor %}
+                    </tbody> 
+                </table>
+                <div style="margin: 10px; padding: 10px;">
+                    <h6>Total items: {{ product_order.get_cart_total_items }}</h6>
+                    <h6>Total cost: &#8369 {{ product_order.get_cart_total_cost|floatformat:2 }}</h6>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-6" >
+            <div class="border border-secondary custom-shadow" >
+                <div style="margin-left: 10px;margin-top: 10px; padding: 10px;">
+                    <h3>Shipping Details</h3>
+                </div>
+                <form style="margin: 10px; padding: 10px; " id="form">
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="firstname">First Name</label>
+                        <input type="text" class="form-control" name="firstname" placeholder="First Name" required>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="lastname">Last Name</label>
+                        <input type="lastname" class="form-control" name="lastname" placeholder="Last Name" required>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputAddress">House#, Street, Brgy</label>
+                      <input type="text" class="form-control" name="inputAddress" placeholder="1234 Main St" required>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="inputCity">Municipality, City</label>
+                        <input type="text" class="form-control" name="inputCity" required>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="inputProvince">Province</label>
+                        <input type="text" class="form-control" name="inputProvince" required>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="inputCountry">Country</label>
+                        <input type="text" class="form-control" name="inputCountry" required>
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label for="inputZip">Zip</label>
+                        <input type="text" class="form-control" name="inputZip" required>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-a btn-outline-secondary" id="place-order">&#8680 Place Order</button>
+                </form>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</section>
+
+  <script type="text/javascript">
+
+      var total = '{{ cart_items }}'
+    
+      var form = document.getElementById('form')
+  
+
+      form.addEventListener('submit', submit_form_data)
+
+      function submit_form_data(){
+        console.log('Order button clicked')
+        console.log('total', total)
+    
+        var user_form_data = {
+          'firstname': null,
+          'lastname': null,
+          'total': total,
+        }
+    
+        var shipping_form_data = {
+          'inputAddress': null,
+          'inputCity': null,
+          'inputProvince': null,
+          'inputCountry': null,
+          'inputZip': null,
+        }
+    
+        shipping_form_data.inputAddress = form.inputAddress.value
+        shipping_form_data.inputCity = form.inputCity.value
+        shipping_form_data.inputProvince = form.inputProvince.value
+        shipping_form_data.inputCountry = form.inputCountry.value
+        shipping_form_data.inputZip = form.inputZip.value
+
+        console.log('shipping_data:', shipping_form_data)
+        console.log('userdata:', user_form_data)
+    
+        var item_url = '/process_order/'
+    
+        fetch(item_url, {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({'form':user_form_data, 'shipping':shipping_form_data}),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            alert('Order succesfully placed!');
+            window.location.replace("{% url 'marketplace-home' %}");
+        })
+        
+      }
+    
+    </script>
+
+{% endblock content %}
+

@@ -1,0 +1,172 @@
+{% extends "marketplace/base.html" %}
+{% load widget_tweaks %}
+
+
+
+{% block content %}
+<div>
+    <div class="position-static border border-secondary profile-shadow" style="margin:20px; padding:20px">
+      <legend class="border-bottom mb-4" style="text-align:center">Accounting Dashboard</legend>
+        <form >
+          <div class="row align-items-end" >
+            <div class="form-group col">
+              {{ filter.form.customer.label_tag }}
+              {% render_field filter.form.customer class="form-control" %}
+            </div>
+            <div class="form-group col">
+              {{ filter.form.transaction_id.label_tag }}
+              {% render_field filter.form.transaction_id class="form-control" %}
+            </div>
+            <div class="form-group col">
+              {{ filter.form.delivery_status.label_tag }}
+              {{ filter.form.delivery_status.option_tag }}
+              {% render_field filter.form.delivery_status class="form-control" %}
+            </div>
+            <div class="form-group col">
+              {{ filter.form.payment_status.label_tag }}
+              {{ filter.form.payment_status.option_tag }}
+              {% render_field filter.form.payment_status class="form-control" %}
+            </div>
+            <div class="form-group col">
+              {{ filter.form.start_date_filter.label_tag }}
+              {% render_field filter.form.start_date_filter class="form-control" %}
+            </div>
+            <div class="form-group col">
+              {{ filter.form.end_date_filter.label_tag }}
+              {% render_field filter.form.end_date_filter class="form-control" %}
+            </div>
+            
+        </div>
+          <button class="btn btn-a" type="submit">Search</button>
+        </form>
+    </div>
+    <div style=" padding:20px">
+        <div class="row">
+          <div class="col-md " style="padding:20px">
+            <div class="border border-secondary profile-shadow" style="padding:20px">
+                <legend class="border-bottom mb-4" style="text-align:center">BALANCE PER USER</legend>
+                {% for items in metrics.balance_per_customer.items %}
+                <div class="d-flex justify-content-between ">
+                    <div>{{ items.0 }}</div>
+                    <div><strong>&#8369 {{ items.1 }}</strong></div>
+                </div>
+                {% endfor %}
+            </div>
+          </div>
+          <div class="col-xl " style="padding:20px">
+            <div class="border border-secondary profile-shadow" style="padding:20px">
+                <legend class="border-bottom mb-4" style="text-align:center">TRANSACTIONS</legend>
+            <table class="table table-striped table-responsive text-center" style="max-height: 1000px; overflow: auto; margin: auto; width:100%">
+                <thead class="align-items-top">
+                    <tr>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Transaction No.</th>
+                        <th>Delivery Status</th>
+                        <th>Order Cost</th>
+                        <th>Total Amount Paid</th>
+                        <th>Balance</th>
+                        <th>Payment Status</th>
+                        <th>Mark Payment As</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for items in product_order %}
+                    <tr>
+                        <td>{{ items.customer.name  }}</td>
+                        <td>{{ items.order.date_ordered }}</td>
+                        <td>{{ items.order.transaction_id }}</td>
+                        <td>{{ items.order.delivery_status }}</td>
+                        <td>&#8369 {{ items.order.total_order_cost|floatformat:2 }}</td>
+                        <td><input class='form-control' style="width:150px" placeholder="{{ items.order.amount_paid }}"onchange="payment_update('{{ items.order.transaction_id }}', '{{ items.order.transaction_id }}-paid')" type="number" id="{{ items.order.transaction_id }}-paid" name="payment"></td>
+                        <td>&#8369 {{ items.order.get_order_balance }}</td>
+                        <td>{{ items.order.payment_status }}</td>
+                        <td>
+                            <select onchange="update_status('{{ items.order.transaction_id }}', 'payment', '{{ items.order.transaction_id }}-payment')" id="{{ items.order.transaction_id }}-payment" class="form-control">
+                                <option value="" selected>---------</option>
+                                <option value="PENDING">PENDING</option>
+                                <option value="PAID">PAID</option>
+                                <option value="CANCELLED">CANCELLED</option>
+                            </select>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>  
+            </div>
+          </div>
+        </div>
+      </div>
+
+</div>
+
+<script type="text/javascript">
+
+    function update_status(id, action, search_id){
+        var item_url = '/status_update/'
+        var name = id
+        var search_id = search_id
+        var action = action
+        var choice_value2 = document.getElementById(search_id).value
+    
+        send_fetch(choice_value2);
+   
+        function send_fetch(choice_value) {
+    
+            fetch(item_url, {
+              method: 'POST',
+              headers: {
+                  'Content-Type':'application/json',
+                  'X-CSRFToken': csrftoken,
+              },
+              body: JSON.stringify({'name':id, 'action':action, 'choice_value':choice_value})
+          })
+          .then((response) => {
+              return response.json()
+          })
+          .then((data) => {
+              console.log('data:', data)
+              location.reload()
+          })
+    
+        }
+    
+        
+    
+    }
+
+    function payment_update(id, search_id){
+        var item_url = '/payment_update/'
+        var name = id
+        var search_id = search_id
+        var choice_value = document.getElementById(search_id).value
+    
+        send_fetch(choice_value);
+   
+        function send_fetch(choice_value) {
+    
+            fetch(item_url, {
+              method: 'POST',
+              headers: {
+                  'Content-Type':'application/json',
+                  'X-CSRFToken': csrftoken,
+              },
+              body: JSON.stringify({'name':id, 'choice_value':choice_value})
+          })
+          .then((response) => {
+              return response.json()
+          })
+          .then((data) => {
+              console.log('data:', data)
+              location.reload()
+          })
+    
+        }
+    
+        
+    
+    }
+    
+</script>
+
+{% endblock content %}

@@ -1,0 +1,27 @@
+{% extends "marketplace/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content%}
+<section>
+    <div style="margin: auto; padding: 20px;">
+        <h2>You are now logged out....</h2>
+            <div class="border-top pt-3">
+                <small class="text-muted">
+                    <a href="{% url 'login' %}">Log In again</a>
+                </small>
+            </div>
+    </div>
+</section>
+<script type="text/javascript">
+
+    setTimeout(function(){
+   window.location.replace("{% url 'marketplace-home' %}");
+}, 5000);
+
+    setTimeout();
+</script>
+
+
+{% endblock content %}

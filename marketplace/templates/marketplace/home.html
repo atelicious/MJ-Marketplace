@@ -1,0 +1,25 @@
+{% extends "marketplace/base.html" %}
+{% load static %}
+
+
+{% block content%}
+<section style="text-align: center;">
+    <h2>AVAILABLE PRODUCTS</h2>
+<div class="product-container " >
+    {% for product in products %}
+    <div class="product-tile border">
+        <img class="" src="{{ product.image_url }}" style="padding:5px; height:200px; width:230px; margin-top:5px" alt="Card image cap">
+        <div style="white-space: nowrap;"><strong>{{ product.name }}</strong></div>
+        <p>{{ product.description }}</p>
+        <!-- <div style="white-space: nowrap; overflow-x: auto; padding: 10px; background-color: #7adbdf"> -->
+            <button data-product="{{ product.id }}" data-action="add" class="btn btn-a update-cart float-left" style="display:inline-block;">Add to Cart</button>
+            <h5 class="float-right" style="display:inline-block; margin:5px">&#8369 {{ product.price|floatformat:2}}</h5>
+        <!-- </div> -->
+    </div>
+    {%endfor%}
+</div>
+
+</section>
+
+{% endblock content %}
+

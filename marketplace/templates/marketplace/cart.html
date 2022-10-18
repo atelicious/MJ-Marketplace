@@ -1,0 +1,59 @@
+{% extends "marketplace/base.html" %}
+{% load static %}
+
+
+{% block content %}
+<section>
+    <div class="row custom-shadow">
+        <div class="col-lg-12">
+            <div >
+                <a  style="margin-left: 10px; margin-top: 10px;" class="btn btn-a btn-outline-secondary" href="{% url 'marketplace-home' %}">&#8678 Continue Shopping</a>
+                <br>
+                <br>
+    
+                <table class="table text-center" style="padding-top: 10px">
+                    <tr>
+                        <th style="padding-top: 20px"><h5>Items: <strong> {{ product_order.get_cart_total_items }}</strong></h5></th>
+                        <th style="padding-top: 20px"><h5>Total:<strong> &#8369 {{ product_order.get_cart_total_cost|floatformat:2 }}</strong></h5></th>
+                        <th>
+                            <a  style="float:right; margin:5px;" class="btn btn-a btn-outline-secondary" href="{% url 'marketplace-checkout' %}">&#8680 Proceed to checkout</a>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+            <div class="table-responsive"> 
+                <table class="table table-striped text-center" >
+                    <thead>
+                      <tr>
+                        <th scope="col" ></th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Item Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for items in products %}
+                      <tr>
+                        <td><img class="img-thumbnail" style="max-width: 75px; height: 75px" src="{{ items.product.image_url }}"></th>
+                        <td>{{ items.product.name }}</td>
+                        <td>&#8369 {{ items.product.price|floatformat:2 }}</td>
+                        <td>{{ items.product_qty }}
+                            <div style="white-space: nowrap; overflow-x: auto">
+                                <button data-product="{{ items.product.id }}" data-action="add" class="btn btn-primary btn-sm update-cart" type="button" style="display:inline-block; width:40px; height:30px; background-color: #6d9ce2;">+</button>
+                                <button data-product="{{ items.product.id }}" data-action="minus" class="btn btn-primary btn-sm update-cart" type="button" style="display:inline-block; width:40px; height:30px; background-color: #6d9ce2;">-</button>   
+                            </div>
+                        </td>
+                        <td>&#8369 {{ items.get_total_cost|floatformat:2 }}</td>
+                      </tr>
+                    {% endfor %}  
+                    </tbody>
+                  </table>
+            </div>
+            
+        </div>
+        
+    </div>
+
+</section>
+{% endblock content %}
