@@ -1,0 +1,5 @@
+django>=2.2.5
+django-crispy-forms
+django-filter
+django-widget-tweaks
+pillow

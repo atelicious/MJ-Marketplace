@@ -1,6 +1,7 @@
 
 #ignore creds.txt
-*.txt
+creds.txt
+secret_key.txt
 
 #ignore env files
 *.env
